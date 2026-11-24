@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>مطعم دارمسك — دمشق القديمة | Darmisk Restaurant</title>
+  <meta name="description" content="مطعم دارمسك في دمشق القديمة، شارع مدحت باشا، نزلة الدقاقين. عندما تعود دمشق — طعمة ما بتنتسى من مطبخنا لسفرتكن." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            alabaster: '#F8F5F0',
+            stonewarm: '#EDE6DA',
+            espresso: '#181411',
+            terracotta: '#A35D38',
+            terracottadark: '#844829',
+            goldwarm: '#C59B5F',
+            muted: '#665D55'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      --bg: #F8F5F0;
+      --surface: #EDE6DA;
+      --ink: #181411;
+      --accent: #A35D38;
+      --line: rgba(24, 20, 17, 0.13);
+    }
+    html[dir="rtl"] body { font-family: 'IBM Plex Sans Arabic', sans-serif; }
+    html[dir="ltr"] body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    html[dir="rtl"] .font-serif-display { font-family: 'Amiri', serif; }
+    html[dir="ltr"] .font-serif-display { font-family: 'Cormorant Garamond', serif; }
+    html[dir="rtl"] .hero-title { font-family: 'Cairo', sans-serif; font-weight: 800; }
+    html[dir="ltr"] .hero-title { font-family: 'Cormorant Garamond', serif; font-weight: 700; }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: pan-y;
+    }
+    .hairline { border-color: var(--line); }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .pb-safe { padding-bottom: calc(0.5rem + env(safe-area-inset-bottom)); }
+    @media (max-width: 767px) {
+      body { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-terracotta selection:text-alabaster">
+
+  <!-- Header -->
+  <header class="fixed top-0 inset-x-0 z-40 bg-alabaster/95 backdrop-blur-md border-b hairline">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3">
+      <a href="#home" class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-terracotta inline-block"></span>
+        <div>
+          <span class="font-serif-display text-2xl sm:text-3xl font-bold text-espresso block leading-none" data-i18n="brand">مطعم دارمسك</span>
+          <span class="text-[10px] tracking-widest uppercase text-terracotta font-semibold hidden sm:block" data-i18n="brand_sub">Darmisk Restaurant</span>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-espresso/80">
+        <a href="#menu" class="hover:text-terracotta transition-colors" data-i18n="nav_menu">المنيو</a>
+        <a href="#about" class="hover:text-terracotta transition-colors" data-i18n="nav_about">عن دارمسك</a>
+        <a href="#reservations" class="hover:text-terracotta transition-colors" data-i18n="nav_reserve">الحجز</a>
+        <a href="#reviews" class="hover:text-terracotta transition-colors" data-i18n="nav_reviews">آراء الزوار</a>
+        <a href="#visit" class="hover:text-terracotta transition-colors" data-i18n="nav_visit">الموقع والتواصل</a>
+      </nav>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button id="lang-toggle" onclick="toggleLanguage()" class="px-3 py-1.5 text-xs font-semibold border hairline rounded-full hover:bg-espresso hover:text-alabaster transition-colors">
+          EN
+        </button>
+        <button onclick="openCartDrawer()" class="relative inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium border hairline rounded-full hover:border-espresso transition-colors">
+          <span data-i18n="nav_order">الطلب</span>
+          <span id="header-cart-count" class="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[11px] font-bold rounded-full bg-terracotta text-alabaster">0</span>
+        </button>
+        <button onclick="openReservationModal()" class="hidden sm:inline-flex px-5 py-2.5 text-xs sm:text-sm font-semibold bg-espresso text-alabaster rounded-full hover:bg-terracotta transition-colors" data-i18n="btn_book">
+          احجز طاولة
+        </button>
+        <button onclick="toggleMobileMenu()" aria-label="Menu" class="md:hidden p-2 border hairline rounded-full">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden border-t hairline bg-alabaster px-5 py-5 space-y-4 shadow-lg">
+      <div class="flex flex-col space-y-3 text-base font-medium">
+        <a href="#menu" onclick="toggleMobileMenu()" data-i18n="nav_menu">المنيو</a>
+        <a href="#about" onclick="toggleMobileMenu()" data-i18n="nav_about">عن دارمسك</a>
+        <a href="#reservations" onclick="toggleMobileMenu()" data-i18n="nav_reserve">الحجز</a>
+        <a href="#reviews" onclick="toggleMobileMenu()" data-i18n="nav_reviews">آراء الزوار</a>
+        <a href="#visit" onclick="toggleMobileMenu()" data-i18n="nav_visit">الموقع والتواصل</a>
+      </div>
+      <div class="pt-3 border-t hairline flex gap-3">
+        <button onclick="toggleMobileMenu(); openReservationModal();" class="flex-1 py-2.5 text-sm font-semibold bg-espresso text-alabaster rounded-full" data-i18n="btn_book">احجز طاولة</button>
+        <button onclick="toggleLanguage(); toggleMobileMenu();" class="px-4 py-2.5 text-sm font-semibold border hairline rounded-full" id="mobile-lang-btn">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="relative min-h-[90svh] flex items-end pt-24 pb-12 sm:pb-20 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img src="hero-darmisk.jpg" alt="مطعم دارمسك في دمشق القديمة" class="w-full h-full object-cover object-center" />
+      <div class="absolute inset-0 bg-gradient-to-t from-espresso/95 via-espresso/60 to-espresso/30"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-alabaster">
+      <div class="max-w-2xl space-y-4 sm:space-y-5">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-alabaster/15 backdrop-blur-xs text-xs font-medium">
+            <span class="text-goldwarm">★ 4.6</span>
+            <span data-i18n="hero_rating">(+686 تقييم)</span>
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-terracotta/90 text-xs font-semibold" data-i18n="hero_badge">
+            دمشق القديمة • مدحت باشا
+          </span>
+        </div>
+
+        <h1 class="hero-title text-4xl sm:text-6xl lg:text-7xl leading-tight" data-i18n="hero_title">عندما تعود دمشق</h1>
+        <p class="font-serif-display text-xl sm:text-2xl text-goldwarm" data-i18n="hero_subtitle">طعمة ما بتنتسى من مطبخنا لسفرتكن</p>
+        <p class="text-sm sm:text-base text-stonewarm/90 leading-relaxed max-w-xl" data-i18n="hero_desc">
+          في قلب دمشق القديمة داخل بيت دمشقي تراثي ساحر بالقرب من خان أسعد باشا، نجمع بين أصالة المطبخ الشامي وكرم الضيافة الدمشقية من الفطور الصباحي وحتى سهرات العشاء والموسيقى.
+        </p>
+
+        <div class="flex flex-wrap gap-3 pt-2">
+          <button onclick="openReservationModal()" class="px-6 sm:px-7 py-3.5 bg-terracotta hover:bg-terracottadark text-alabaster text-sm font-semibold rounded-full transition-colors" data-i18n="btn_book">
+            احجز طاولة
+          </button>
+          <a href="#menu" class="px-6 sm:px-7 py-3.5 bg-alabaster/10 hover:bg-alabaster/20 backdrop-blur-xs border border-alabaster/30 text-alabaster text-sm font-semibold rounded-full transition-colors" data-i18n="btn_explore_menu">
+            استكشف المنيو
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlights Strip -->
+  <section class="bg-espresso text-alabaster py-4 border-b border-alabaster/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+      <div class="flex items-center gap-2"><span class="text-goldwarm">✓</span><span data-i18n="strip_halal">طعام حلال 100% وخيارات نباتية</span></div>
+      <div class="flex items-center gap-2"><span class="text-goldwarm">🏛️</span><span data-i18n="strip_house">بيت دمشقي تراثي وجلسات خارجية</span></div>
+      <div class="flex items-center gap-2"><span class="text-goldwarm">🎶</span><span data-i18n="strip_music">أمسيات موسيقية وأجواء أركيلة</span></div>
+      <div class="flex items-center gap-2"><span class="text-goldwarm">💵</span><span data-i18n="strip_cash">الدفع نقدي (Cash Only)</span></div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section id="menu" class="py-14 sm:py-24 border-b hairline">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div>
+          <p class="text-xs uppercase tracking-widest text-terracotta font-semibold mb-1.5" data-i18n="menu_eyebrow">قائمة الطعام الرسمية</p>
+          <h2 class="font-serif-display text-3xl sm:text-5xl font-bold text-espresso" data-i18n="menu_title">أطباق دارمسك الشامية</h2>
+        </div>
+        <div class="flex items-center gap-2 flex-wrap">
+          <button onclick="toggleVegFilter()" id="filter-veg" class="px-3.5 py-1.5 text-xs font-semibold border hairline rounded-full transition-colors" data-i18n="filter_veg">
+            خيارات نباتية (V)
+          </button>
+          <span class="text-xs px-3 py-1.5 rounded-full bg-stonewarm text-espresso font-medium" data-i18n="badge_halal">حلال 100%</span>
+        </div>
+      </div>
+
+      <!-- Category Tabs -->
+      <div id="category-tabs" class="flex gap-2 overflow-x-auto no-scrollbar pb-4 mb-7 border-b hairline"></div>
+
+      <!-- Menu Grid -->
+      <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"></div>
+    </div>
+  </section>
+
+  <!-- About & Features Section -->
+  <section id="about" class="py-14 sm:py-24 bg-stonewarm/50 border-b hairline">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <div class="lg:col-span-6 space-y-5">
+        <p class="text-xs uppercase tracking-widest text-terracotta font-semibold" data-i18n="about_eyebrow">عن مطعم دارمسك</p>
+        <h2 class="font-serif-display text-3xl sm:text-5xl font-bold text-espresso leading-tight" data-i18n="about_title">حكاية البيت الدمشقي بين الماضي والحاضر</h2>
+        <p class="text-muted leading-relaxed text-sm sm:text-base" data-i18n="about_p1">
+          يقع مطعم دارمسك في قلب دمشق القديمة داخل بيت دمشقي تراثي يأخذك في جولة ساحرة بين الماضي والحاضر. يجمع المطعم بين جودة المطبخ الشامي الأصيل وكرم الضيافة الدمشقية.
+        </p>
+        <p class="text-muted leading-relaxed text-sm sm:text-base" data-i18n="about_p2">
+          نقدم تجربة متكاملة تبدأ من الفطور الدمشقي الصباحي الأصيل والمناقيش الساخنة، وصولاً إلى وجبات الغداء والعشاء والكبب والمشاوي وأمسيات الموسيقى والأركيلة في أجواء دافئة تناسب العائلات والمجموعات والسياح.
+        </p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+          <div class="p-3.5 bg-alabaster rounded-2xl border hairline">
+            <p class="font-bold text-sm text-espresso" data-i18n="feat_1_t">صالة وجلسات خارجية</p>
+            <p class="text-xs text-muted mt-0.5" data-i18n="feat_1_d">Dine-in & Outdoor</p>
+          </div>
+          <div class="p-3.5 bg-alabaster rounded-2xl border hairline">
+            <p class="font-bold text-sm text-espresso" data-i18n="feat_2_t">سفري وتوصيل ومناسبات</p>
+            <p class="text-xs text-muted mt-0.5" data-i18n="feat_2_d">Takeaway & Catering</p>
+          </div>
+          <div class="p-3.5 bg-alabaster rounded-2xl border hairline col-span-2 sm:col-span-1">
+            <p class="font-bold text-sm text-espresso" data-i18n="feat_3_t">عائلي وسياحي</p>
+            <p class="text-xs text-muted mt-0.5" data-i18n="feat_3_d">منيو عربي / إنكليزي</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-6 grid grid-cols-2 gap-3 sm:gap-4">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Courtyard_of_Azm_Palace_in_Damascus.jpg/1600px-Courtyard_of_Azm_Palace_in_Damascus.jpg" onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Azm_Palace_courtyard%2C_Damascus.jpg/1600px-Azm_Palace_courtyard%2C_Damascus.jpg';" alt="البيت الدمشقي التراثي في دارمسك" class="w-full h-52 sm:h-80 object-cover rounded-2xl border hairline" />
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80" alt="أطباق دارمسك الشامية" class="w-full h-52 sm:h-80 object-cover rounded-2xl border hairline mt-5" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="py-14 sm:py-24 border-b hairline">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-8">
+        <p class="text-xs uppercase tracking-widest text-terracotta font-semibold mb-1.5" data-i18n="gal_eyebrow">أجواء دارمسك</p>
+        <h2 class="font-serif-display text-3xl sm:text-5xl font-bold text-espresso" data-i18n="gal_title">من مطبخنا وسهراتنا في الشام القديمة</h2>
+      </div>
+      <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5"></div>
+    </div>
+  </section>
+
+  <!-- Reservations Section -->
+  <section id="reservations" class="py-14 sm:py-24 bg-stonewarm/40 border-b hairline">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-8 space-y-2">
+        <p class="text-xs uppercase tracking-widest text-terracotta font-semibold" data-i18n="res_eyebrow">الحجز المسبق</p>
+        <h2 class="font-serif-display text-3xl sm:text-5xl font-bold text-espresso" data-i18n="res_title">احجز طاولتك في مطعم دارمسك</h2>
+        <p class="text-xs sm:text-sm text-muted" data-i18n="res_note">يُنصح بالحجز المسبق لوجبات الغداء والعشاء وأمسيات الموسيقى — الدفع نقدي (Cash Only)</p>
+      </div>
+
+      <div class="bg-alabaster border hairline rounded-3xl p-5 sm:p-10 shadow-xs">
+        <form id="inline-res-form" onsubmit="handleReservationSubmit(event, 'inline')" class="space-y-5">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+            <div>
+              <label class="block text-xs font-semibold text-muted mb-1.5" data-i18n="res_date">التاريخ</label>
+              <input type="date" name="date" required class="w-full px-4 py-3 text-base bg-stonewarm/35 border hairline rounded-xl focus:outline-none focus:border-terracotta" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-muted mb-1.5" data-i18n="res_guests">عدد الأشخاص</label>
+              <select name="guests" class="w-full px-4 py-3 text-base bg-stonewarm/35 border hairline rounded-xl focus:outline-none focus:border-terracotta">
+                <option value="2">2</option><option value="3">3</option><option value="4" selected>4</option>
+                <option value="6">6</option><option value="8">8</option><option value="12">10+</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-muted mb-1.5" data-i18n="res_seating">نوع الجلسة</label>
+              <select name="seating" class="w-full px-4 py-3 text-base bg-stonewarm/35 border hairline rounded-xl focus:outline-none focus:border-terracotta">
+                <option value="courtyard" data-i18n="seat_courtyard">أرض الديار التراثية</option>
+                <option value="indoor" data-i18n="seat_indoor">الصالة الداخلية الدافئة</option>
+                <option value="outdoor" data-i18n="seat_outdoor">الجلسات الخارجية</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-muted mb-2" data-i18n="res_time">اختر الموعد المناسب</label>
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2" id="inline-time-slots"></div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <input type="text" name="name" required data-i18n-placeholder="ph_name" placeholder="الاسم الكامل" class="w-full px-4 py-3 text-base bg-stonewarm/35 border hairline rounded-xl focus:outline-none focus:border-terracotta" />
+            <input type="tel" name="phone" required data-i18n-placeholder="ph_phone" placeholder="رقم الموبايل / واتساب" class="w-full px-4 py-3 text-base bg-stonewarm/35 border hairline rounded-xl focus:outline-none focus:border-terracotta" />
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 pt-1">
+            <button type="submit" class="flex-1 py-3.5 bg-espresso hover:bg-terracotta text-alabaster text-sm font-semibold rounded-full transition-colors" data-i18n="btn_confirm_res">
+              تأكيد الحجز عبر واتساب
+            </button>
+            <a href="tel:0115440000" class="py-3.5 px-6 border hairline hover:border-espresso text-center text-sm font-semibold rounded-full transition-colors">
+              <span data-i18n="btn_call_landline">اتصال أرضي:</span> <span dir="ltr">0115440000</span>
+            </a>
+          </div>
+        </form>
+
+        <div id="inline-res-receipt" class="hidden text-center py-6 space-y-4">
+          <div class="w-12 h-12 rounded-full bg-terracotta/15 text-terracotta mx-auto flex items-center justify-center text-xl font-bold">✓</div>
+          <h3 class="font-serif-display text-2xl font-bold" data-i18n="res_confirmed">تم تجهيز طلب حجزك</h3>
+          <p id="inline-res-details" class="text-sm text-muted"></p>
+          <p class="text-xs font-mono bg-stonewarm/60 inline-block px-4 py-1.5 rounded-full" id="inline-res-code"></p>
+          <div>
+            <button onclick="resetReservation('inline')" class="text-xs underline text-terracotta font-semibold" data-i18n="btn_new_res">تعديل أو حجز جديد</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="reviews" class="py-14 sm:py-24 border-b hairline">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+        <div>
+          <p class="text-xs uppercase tracking-widest text-terracotta font-semibold mb-1.5" data-i18n="rev_eyebrow">آراء ضيوفنا</p>
+          <h2 class="font-serif-display text-3xl sm:text-5xl font-bold text-espresso" data-i18n="rev_title">ماذا يقول الزوار عن دارمسك</h2>
+        </div>
+        <div class="inline-flex items-center gap-3 px-4 py-2.5 bg-stonewarm/60 rounded-2xl border hairline">
+          <span class="font-serif-display text-3xl font-bold text-espresso">4.6</span>
+          <div class="text-xs">
+            <p class="text-terracotta font-bold">★★★★★</p>
+            <p class="text-muted" data-i18n="rev_count">بناءً على أكثر من 686 تقييم</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+        <div class="p-6 bg-stonewarm/35 border hairline rounded-2xl space-y-3">
+          <p class="text-terracotta text-sm">★★★★★</p>
+          <p class="font-serif-display text-xl font-bold text-espresso leading-snug" data-i18n="rev_1_q">"تحفة حقيقية في دمشق القديمة بأجواء تراثية دافئة"</p>
+          <p class="text-xs text-muted leading-relaxed" data-i18n="rev_1_d">المكان يأخذك إلى روح الشام الأصيلة قرب خان أسعد باشا، مع ضيافة لا تُنسى ونكهات شامية متقنة.</p>
+          <p class="text-xs font-semibold text-espresso pt-1" data-i18n="rev_1_a">— زائر من دمشق</p>
+        </div>
+        <div class="p-6 bg-stonewarm/35 border hairline rounded-2xl space-y-3">
+          <p class="text-terracotta text-sm">★★★★★</p>
+          <p class="font-serif-display text-xl font-bold text-espresso leading-snug" data-i18n="rev_2_q">"أفضل مكان لتجربة الفطور الدمشقي الأصيل والأطباق المتنوعة"</p>
+          <p class="text-xs text-muted leading-relaxed" data-i18n="rev_2_d">الفطور العربي والمناقيش الساخنة والكبب المشوية والصاجية على أصولها وبجودة عالية جداً.</p>
+          <p class="text-xs font-semibold text-espresso pt-1" data-i18n="rev_2_a">— تجربة فطور عائلي</p>
+        </div>
+        <div class="p-6 bg-stonewarm/35 border hairline rounded-2xl space-y-3">
+          <p class="text-terracotta text-sm">★★★★★</p>
+          <p class="font-serif-display text-xl font-bold text-espresso leading-snug" data-i18n="rev_3_q">"خدمة راقية وطاقم ودود للغاية مع توفر منيو بالإنجليزية وخيارات نباتية رائعة"</p>
+          <p class="text-xs text-muted leading-relaxed" data-i18n="rev_3_d">تعامل راقٍ جداً ومناسب للعائلات والضيوف الأجانب، والأجواء المسائية مع الموسيقى مميزة للغاية.</p>
+          <p class="text-xs font-semibold text-espresso pt-1" data-i18n="rev_3_a">— تقييم الزوار</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visit & Contact Section -->
+  <section id="visit" class="py-14 sm:py-24 border-b hairline">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+      <div class="lg:col-span-5 space-y-5">
+        <div>
+          <p class="text-xs uppercase tracking-widest text-terracotta font-semibold mb-1.5" data-i18n="visit_eyebrow">زورونا في الشام القديمة</p>
+          <h2 class="font-serif-display text-3xl sm:text-4xl font-bold text-espresso" data-i18n="visit_title">الموقع وساعات العمل</h2>
+        </div>
+
+        <div class="p-5 bg-stonewarm/50 border hairline rounded-2xl space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-semibold" data-i18n="status_label">حالة المطعم الآن</span>
+            <span id="live-status" class="text-xs font-semibold px-3 py-1 rounded-full"></span>
+          </div>
+          <p class="text-sm text-muted" data-i18n="hours_text">يومياً من الساعة 10:00 صباحاً حتى 1:00 بعد منتصف الليل (الإثنين — الأحد)</p>
+        </div>
+
+        <div class="space-y-2.5 text-sm">
+          <p class="font-bold text-espresso" data-i18n="address_text">دمشق القديمة، شارع مدحت باشا، نزلة الدقاقين، باب الحديد (بالقرب من خان أسعد باشا)، دمشق، سوريا</p>
+          <p class="text-xs font-mono text-muted">Plus Code: G844+JW3, Medhat basha, daqqaqen, Hadid</p>
+          <div class="flex flex-wrap gap-2 pt-1">
+            <button onclick="copyAddress()" class="px-3.5 py-1.5 text-xs font-semibold bg-stonewarm hover:bg-espresso hover:text-alabaster rounded-full transition-colors" data-i18n="btn_copy_addr">
+              نسخ العنوان
+            </button>
+            <a href="https://wa.me/963950544544" target="_blank" rel="noopener" class="px-3.5 py-1.5 text-xs font-semibold bg-terracotta text-alabaster rounded-full hover:bg-terracottadark transition-colors">
+              واتساب: <span dir="ltr">+963 950 544 544</span>
+            </a>
+            <a href="tel:0115440000" class="px-3.5 py-1.5 text-xs font-semibold border hairline rounded-full hover:border-espresso transition-colors">
+              أرضي: <span dir="ltr">0115440000</span>
+            </a>
+          </div>
+          <div class="flex gap-4 pt-2 text-xs font-semibold text-terracotta">
+            <a href="https://instagram.com/darmiskrestaurant" target="_blank" rel="noopener" class="hover:underline">Instagram: @darmiskrestaurant</a>
+            <a href="https://facebook.com/darmiskrestaurant" target="_blank" rel="noopener" class="hover:underline">Facebook</a>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-3 pt-4 border-t hairline">
+          <h3 class="text-sm font-bold text-espresso" data-i18n="contact_title">استفسار أو حجز مناسبة (Catering)</h3>
+          <input type="text" required data-i18n-placeholder="ph_name" placeholder="الاسم الكامل" class="w-full px-4 py-2.5 text-base bg-alabaster border hairline rounded-xl focus:outline-none focus:border-terracotta" />
+          <input type="tel" required data-i18n-placeholder="ph_phone" placeholder="رقم الموبايل / واتساب" class="w-full px-4 py-2.5 text-base bg-alabaster border hairline rounded-xl focus:outline-none focus:border-terracotta" />
+          <textarea rows="3" required data-i18n-placeholder="ph_msg" placeholder="تفاصيل استفسارك أو المناسبة..." class="w-full px-4 py-2.5 text-base bg-alabaster border hairline rounded-xl focus:outline-none focus:border-terracotta"></textarea>
+          <button type="submit" class="px-6 py-2.5 bg-espresso hover:bg-terracotta text-alabaster text-xs font-semibold rounded-full transition-colors" data-i18n="btn_send">إرسال عبر واتساب</button>
+        </form>
+      </div>
+
+      <div class="lg:col-span-7">
+        <div class="w-full h-[320px] sm:h-full min-h-[340px] rounded-3xl overflow-hidden border hairline">
+          <iframe title="Darmisk Restaurant Old Damascus Map" style="touch-action: pan-y;" class="w-full h-full border-0" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=36.3025%2C33.5055%2C36.3115%2C33.5115&amp;layer=mapnik&amp;marker=33.5085%2C36.3070"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-espresso text-alabaster pt-10 pb-14 md:pb-10">
+    <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="text-center md:text-start space-y-1">
+        <p class="font-serif-display text-2xl font-bold" data-i18n="brand">مطعم دارمسك</p>
+        <p class="text-xs text-stonewarm/75" data-i18n="footer_sub">دمشق القديمة • شارع مدحت باشا • نزلة الدقاقين • باب الحديد</p>
+        <p class="text-xs text-stonewarm/60" data-i18n="footer_rights">© 2026 مطعم دارمسك (Darmisk Restaurant). جميع الحقوق محفوظة.</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-3 text-xs">
+        <a href="https://wa.me/963950544544" target="_blank" rel="noopener" class="px-4 py-2 rounded-full bg-terracotta hover:bg-terracottadark font-semibold transition-colors">WhatsApp: <span dir="ltr">+963 950 544 544</span></a>
+        <a href="tel:0115440000" class="px-4 py-2 rounded-full border border-alabaster/20 hover:border-alabaster font-semibold transition-colors"><span dir="ltr">0115440000</span></a>
+        <a href="https://instagram.com/darmiskrestaurant" target="_blank" rel="noopener" class="px-4 py-2 rounded-full border border-alabaster/20 hover:border-alabaster font-semibold transition-colors">@darmiskrestaurant</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-alabaster/95 backdrop-blur-md border-t hairline px-2 pt-2 pb-safe grid grid-cols-4 gap-1 text-[11px] font-semibold">
+    <a href="#menu" class="flex flex-col items-center gap-1 py-1 text-espresso/80 hover:text-terracotta">
+      <span>🍽️</span><span data-i18n="nav_menu">المنيو</span>
+    </a>
+    <button onclick="openReservationModal()" class="flex flex-col items-center gap-1 py-1 text-espresso/80 hover:text-terracotta">
+      <span>📅</span><span data-i18n="nav_reserve">الحجز</span>
+    </button>
+    <button onclick="openCartDrawer()" class="relative flex flex-col items-center gap-1 py-1 text-espresso/80 hover:text-terracotta">
+      <span>🛍️</span>
+      <span id="mobile-cart-count" class="absolute top-0 right-4 min-w-[16px] h-4 px-1 text-[10px] rounded-full bg-terracotta text-alabaster flex items-center justify-center">0</span>
+      <span data-i18n="nav_order">الطلب</span>
+    </button>
+    <a href="#visit" class="flex flex-col items-center gap-1 py-1 text-espresso/80 hover:text-terracotta">
+      <span>📍</span><span data-i18n="nav_visit">الموقع</span>
+    </a>
+  </nav>
+
+  <!-- Cart Drawer -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-espresso/60 backdrop-blur-xs" onclick="closeCartDrawer()"></div>
+    <div class="absolute inset-x-0 bottom-0 md:inset-y-0 md:inset-x-auto md:end-0 w-full md:max-w-md max-h-[88svh] md:max-h-full bg-alabaster rounded-t-3xl md:rounded-none shadow-2xl flex flex-col">
+      <div class="w-10 h-1 bg-espresso/20 rounded-full mx-auto mt-3 md:hidden shrink-0"></div>
+      <div class="p-5 border-b hairline flex items-center justify-between">
+        <h3 class="font-serif-display text-2xl font-bold" data-i18n="cart_title">سلة طلبات دارمسك</h3>
+        <button onclick="closeCartDrawer()" class="w-8 h-8 rounded-full border hairline flex items-center justify-center">✕</button>
+      </div>
+
+      <div id="cart-body" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
+
+      <div id="cart-footer" class="p-5 border-t hairline bg-stonewarm/40 space-y-3">
+        <div class="grid grid-cols-3 gap-1.5">
+          <button onclick="setFulfillment('delivery')" id="btn-delivery" class="py-2 text-[11px] font-semibold rounded-full border hairline" data-i18n="ful_delivery">توصيل بدمشق</button>
+          <button onclick="setFulfillment('takeaway')" id="btn-takeaway" class="py-2 text-[11px] font-semibold rounded-full border hairline" data-i18n="ful_takeaway">سفري</button>
+          <button onclick="setFulfillment('dinein')" id="btn-dinein" class="py-2 text-[11px] font-semibold rounded-full border hairline" data-i18n="ful_dinein">داخل المطعم</button>
+        </div>
+        <p class="text-[11px] text-muted text-center" data-i18n="cash_note">الدفع نقدي عند الاستلام أو في المطعم (Cash Only)</p>
+        <div id="cart-totals" class="text-sm space-y-1"></div>
+        <button onclick="checkoutOrder()" id="checkout-btn" class="w-full py-3.5 bg-terracotta hover:bg-terracottadark text-alabaster text-sm font-semibold rounded-full transition-colors" data-i18n="btn_checkout">
+          إرسال الطلب عبر واتساب
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reservation Modal -->
+  <div id="res-modal" class="fixed inset-0 z-50 hidden flex items-end sm:items-center justify-center">
+    <div class="absolute inset-0 bg-espresso/60" onclick="closeReservationModal()"></div>
+    <div class="relative w-full sm:max-w-lg bg-alabaster rounded-t-3xl sm:rounded-3xl p-5 sm:p-6 max-h-[90svh] overflow-y-auto pb-8">
+      <div class="w-10 h-1 bg-espresso/20 rounded-full mx-auto mb-4 sm:hidden"></div>
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-serif-display text-2xl font-bold" data-i18n="btn_book">احجز طاولة</h3>
+        <button onclick="closeReservationModal()" class="w-8 h-8 rounded-full border hairline">✕</button>
+      </div>
+      <form id="modal-res-form" onsubmit="handleReservationSubmit(event, 'modal')" class="space-y-3.5">
+        <div class="grid grid-cols-2 gap-3">
+          <input type="date" name="date" required class="w-full px-3.5 py-2.5 text-base bg-stonewarm/40 border hairline rounded-xl" />
+          <select name="guests" class="w-full px-3.5 py-2.5 text-base bg-stonewarm/40 border hairline rounded-xl">
+            <option value="2">2</option><option value="4" selected>4</option><option value="6">6</option><option value="8">8</option><option value="10">10+</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-3 gap-2" id="modal-time-slots"></div>
+        <input type="text" name="name" required data-i18n-placeholder="ph_name" placeholder="الاسم الكامل" class="w-full px-3.5 py-2.5 text-base bg-stonewarm/40 border hairline rounded-xl" />
+        <input type="tel" name="phone" required data-i18n-placeholder="ph_phone" placeholder="رقم الموبايل / واتساب" class="w-full px-3.5 py-2.5 text-base bg-stonewarm/40 border hairline rounded-xl" />
+        <button type="submit" class="w-full py-3 bg-terracotta text-alabaster text-sm font-semibold rounded-full" data-i18n="btn_confirm_res">تأكيد الحجز عبر واتساب</button>
+      </form>
+      <div id="modal-res-receipt" class="hidden text-center py-6 space-y-3">
+        <div class="w-12 h-12 rounded-full bg-terracotta/15 text-terracotta mx-auto flex items-center justify-center text-xl font-bold">✓</div>
+        <h4 class="font-serif-display text-2xl font-bold" data-i18n="res_confirmed">تم تجهيز طلب حجزك</h4>
+        <p id="modal-res-details" class="text-sm text-muted"></p>
+        <p id="modal-res-code" class="text-xs font-mono bg-stonewarm/60 inline-block px-4 py-1.5 rounded-full"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="fixed inset-0 z-50 hidden bg-espresso/95 flex items-center justify-center p-4">
+    <button onclick="closeLightbox()" class="absolute top-5 end-5 w-10 h-10 rounded-full bg-alabaster/10 text-alabaster text-lg">✕</button>
+    <button onclick="stepLightbox(-1)" class="absolute start-4 w-10 h-10 rounded-full bg-alabaster/10 text-alabaster text-xl">‹</button>
+    <div class="max-w-4xl w-full text-center space-y-3">
+      <img id="lightbox-img" src="" alt="" class="max-h-[78vh] mx-auto rounded-xl object-contain" />
+      <p id="lightbox-caption" class="text-sm text-stonewarm"></p>
+    </div>
+    <button onclick="stepLightbox(1)" class="absolute end-4 w-10 h-10 rounded-full bg-alabaster/10 text-alabaster text-xl">›</button>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-20 md:bottom-6 start-1/2 -translate-x-1/2 z-50 hidden max-w-[92vw] w-max px-5 py-2.5 bg-espresso text-alabaster text-xs sm:text-sm rounded-full shadow-lg text-center"></div>
+
+  <script>
+    const WHATSAPP_NUMBER = '963950544544';
+
+    const I18N = {
+      ar: {
+        brand: 'مطعم دارمسك',
+        brand_sub: 'Darmisk Restaurant',
+        nav_menu: 'المنيو', nav_about: 'عن دارمسك', nav_reserve: 'الحجز', nav_reviews: 'آراء الزوار', nav_visit: 'الموقع والتواصل', nav_order: 'الطلب',
+        btn_book: 'احجز طاولة', btn_explore_menu: 'استكشف المنيو',
+        hero_rating: '(+686 تقييم)',
+        hero_badge: 'دمشق القديمة • مدحت باشا',
+        hero_title: 'عندما تعود دمشق',
+        hero_subtitle: 'طعمة ما بتنتسى من مطبخنا لسفرتكن',
+        hero_desc: 'في قلب دمشق القديمة داخل بيت دمشقي تراثي ساحر بالقرب من خان أسعد باشا، نجمع بين أصالة المطبخ الشامي وكرم الضيافة الدمشقية من الفطور الصباحي وحتى سهرات العشاء والموسيقى.',
+        strip_halal: 'طعام حلال 100% وخيارات نباتية',
+        strip_house: 'بيت دمشقي تراثي وجلسات خارجية',
+        strip_music: 'أمسيات موسيقية وأجواء أركيلة',
+        strip_cash: 'الدفع نقدي (Cash Only)',
+        menu_eyebrow: 'قائمة الطعام الرسمية',
+        menu_title: 'أطباق دارمسك الشامية',
+        filter_veg: 'خيارات نباتية (V)',
+        badge_halal: 'حلال 100%',
+        about_eyebrow: 'عن مطعم دارمسك',
+        about_title: 'حكاية البيت الدمشقي بين الماضي والحاضر',
+        about_p1: 'يقع مطعم دارمسك في قلب دمشق القديمة داخل بيت دمشقي تراثي يأخذك في جولة ساحرة بين الماضي والحاضر. يجمع المطعم بين جودة المطبخ الشامي الأصيل وكرم الضيافة الدمشقية.',
+        about_p2: 'نقدم تجربة متكاملة تبدأ من الفطور الدمشقي الصباحي الأصيل والمناقيش الساخنة، وصولاً إلى وجبات الغداء والعشاء والكبب والمشاوي وأمسيات الموسيقى والأركيلة في أجواء دافئة تناسب العائلات والمجموعات والسياح.',
+        feat_1_t: 'صالة وجلسات خارجية', feat_1_d: 'Dine-in & Outdoor',
+        feat_2_t: 'سفري وتوصيل ومناسبات', feat_2_d: 'Takeaway & Catering',
+        feat_3_t: 'عائلي وسياحي', feat_3_d: 'منيو عربي / إنكليزي',
+        gal_eyebrow: 'أجواء دارمسك',
+        gal_title: 'من مطبخنا وسهراتنا في الشام القديمة',
+        res_eyebrow: 'الحجز المسبق',
+        res_title: 'احجز طاولتك في مطعم دارمسك',
+        res_note: 'يُنصح بالحجز المسبق لوجبات الغداء والعشاء وأمسيات الموسيقى — الدفع نقدي (Cash Only)',
+        res_date: 'التاريخ', res_guests: 'عدد الأشخاص', res_seating: 'نوع الجلسة', res_time: 'اختر الموعد المناسب',
+        seat_courtyard: 'أرض الديار التراثية', seat_indoor: 'الصالة الداخلية الدافئة', seat_outdoor: 'الجلسات الخارجية',
+        btn_confirm_res: 'تأكيد الحجز عبر واتساب', btn_call_landline: 'اتصال أرضي:',
+        res_confirmed: 'تم تجهيز طلب حجزك', btn_new_res: 'تعديل أو حجز جديد',
+        rev_eyebrow: 'آراء ضيوفنا', rev_title: 'ماذا يقول الزوار عن دارمسك',
+        rev_count: 'بناءً على أكثر من 686 تقييم',
+        rev_1_q: '"تحفة حقيقية في دمشق القديمة بأجواء تراثية دافئة"',
+        rev_1_d: 'المكان يأخذك إلى روح الشام الأصيلة قرب خان أسعد باشا، مع ضيافة لا تُنسى ونكهات شامية متقنة.',
+        rev_1_a: '— زائر من دمشق',
+        rev_2_q: '"أفضل مكان لتجربة الفطور الدمشقي الأصيل والأطباق المتنوعة"',
+        rev_2_d: 'الفطور العربي والمناقيش الساخنة والكبب المشوية والصاجية على أصولها وبجودة عالية جداً.',
+        rev_2_a: '— تجربة فطور عائلي',
+        rev_3_q: '"خدمة راقية وطاقم ودود للغاية مع توفر منيو بالإنجليزية وخيارات نباتية رائعة"',
+        rev_3_d: 'تعامل راقٍ جداً ومناسب للعائلات والضيوف الأجانب، والأجواء المسائية مع الموسيقى مميزة للغاية.',
+        rev_3_a: '— تقييم الزوار',
+        visit_eyebrow: 'زورونا في الشام القديمة', visit_title: 'الموقع وساعات العمل',
+        status_label: 'حالة المطعم الآن',
+        hours_text: 'يومياً من الساعة 10:00 صباحاً حتى 1:00 بعد منتصف الليل (الإثنين — الأحد)',
+        address_text: 'دمشق القديمة، شارع مدحت باشا، نزلة الدقاقين، باب الحديد (بالقرب من خان أسعد باشا)، دمشق، سوريا',
+        btn_copy_addr: 'نسخ العنوان',
+        contact_title: 'استفسار أو حجز مناسبة (Catering)',
+        btn_send: 'إرسال عبر واتساب',
+        footer_sub: 'دمشق القديمة • شارع مدحت باشا • نزلة الدقاقين • باب الحديد',
+        footer_rights: '© 2026 مطعم دارمسك (Darmisk Restaurant). جميع الحقوق محفوظة.',
+        cart_title: 'سلة طلبات دارمسك',
+        cart_empty: 'سلتك فارغة حالياً. اختر أطباقك من منيو دارمسك.',
+        ful_delivery: 'توصيل بدمشق', ful_takeaway: 'سفري', ful_dinein: 'داخل المطعم',
+        cash_note: 'الدفع نقدي عند الاستلام أو في المطعم (Cash Only)',
+        subtotal: 'المجموع التقديري', total: 'الإجمالي',
+        btn_checkout: 'إرسال الطلب عبر واتساب',
+        add_btn: 'أضف للطلب',
+        open_now: 'مفتوح الآن (10:00 ص — 1:00 ص)',
+        closed_now: 'مغلق حالياً (يفتح 10:00 ص)',
+        toast_copied: 'تم نسخ عنوان مطعم دارمسك بنجاح',
+        ph_name: 'الاسم الكامل', ph_phone: 'رقم الموبايل / واتساب', ph_msg: 'تفاصيل استفسارك أو المناسبة...'
+      },
+      en: {
+        brand: 'Darmisk Restaurant',
+        brand_sub: 'مطعم دارمسك • دمشق القديمة',
+        nav_menu: 'Menu', nav_about: 'About', nav_reserve: 'Book Table', nav_reviews: 'Reviews', nav_visit: 'Location', nav_order: 'Order',
+        btn_book: 'Book a Table', btn_explore_menu: 'Explore Menu',
+        hero_rating: '(686+ Reviews)',
+        hero_badge: 'Old Damascus • Medhat Basha',
+        hero_title: 'When Damascus Returns',
+        hero_subtitle: 'An unforgettable taste from our kitchen to your table',
+        hero_desc: 'Set inside a charming heritage Damascene house in the heart of Old Damascus near Khan Asaad Basha, blending authentic Levantine cuisine with warm Damascene hospitality from morning breakfast to live music evenings.',
+        strip_halal: '100% Halal & Vegetarian Options',
+        strip_house: 'Heritage Damascene House & Courtyard',
+        strip_music: 'Live Music Nights & Shisha Lounge',
+        strip_cash: 'Cash Only',
+        menu_eyebrow: 'Official Menu',
+        menu_title: 'Darmisk Damascene Specialties',
+        filter_veg: 'Vegetarian (V)',
+        badge_halal: '100% Halal',
+        about_eyebrow: 'About Darmisk',
+        about_title: 'A Heritage Damascene House Between Past & Present',
+        about_p1: 'Located in the heart of Old Damascus inside a traditional Damascene house, Darmisk takes you on an enchanting journey between past and present with authentic Syrian flavors.',
+        about_p2: 'From classic morning Damascene breakfast and fresh manakish to charcoal grills, specialty kibbeh, evening music nights, and shisha, we welcome families, groups, and travelers.',
+        feat_1_t: 'Dine-in & Outdoor', feat_1_d: 'Courtyard & Indoor Halls',
+        feat_2_t: 'Takeaway & Catering', feat_2_d: 'Damascus Delivery Available',
+        feat_3_t: 'Family & Tourist Friendly', feat_3_d: 'Bilingual AR / EN Menu',
+        gal_eyebrow: 'Darmisk Atmosphere',
+        gal_title: 'From Our Kitchen & Evenings in Old Damascus',
+        res_eyebrow: 'Table Reservations',
+        res_title: 'Reserve Your Table at Darmisk',
+        res_note: 'Reservations recommended for lunch, dinner & music nights — Cash Only',
+        res_date: 'Date', res_guests: 'Party Size', res_seating: 'Seating Area', res_time: 'Preferred Time',
+        seat_courtyard: 'Heritage Courtyard', seat_indoor: 'Warm Indoor Hall', seat_outdoor: 'Outdoor Seating',
+        btn_confirm_res: 'Confirm via WhatsApp', btn_call_landline: 'Call Landline:',
+        res_confirmed: 'Reservation Request Ready', btn_new_res: 'Modify or New Booking',
+        rev_eyebrow: 'Guest Reviews', rev_title: 'What Visitors Say About Darmisk',
+        rev_count: 'Rated 4.6/5 from 686+ reviews',
+        rev_1_q: '"A true gem in Old Damascus with a warm heritage atmosphere"',
+        rev_1_d: 'Captures the authentic soul of Old Damascus near Khan Asaad Basha with unforgettable hospitality.',
+        rev_1_a: '— Visitor from Damascus',
+        rev_2_q: '"Best spot to experience authentic Damascene breakfast and diverse dishes"',
+        rev_2_d: 'Classic Arabic breakfast, fresh manakish, and wood-fired kibbeh prepared with exceptional quality.',
+        rev_2_a: '— Family Breakfast Review',
+        rev_3_q: '"Immaculate service, friendly staff, English menu, and great vegetarian options"',
+        rev_3_d: 'Warm welcoming team ideal for families and international guests, with lively evening music.',
+        rev_3_a: '— Verified Diner',
+        visit_eyebrow: 'Visit Us in Old Damascus', visit_title: 'Location & Opening Hours',
+        status_label: 'Live Status',
+        hours_text: 'Daily: 10:00 AM — 1:00 AM (Monday — Sunday)',
+        address_text: 'Old Damascus, Medhat Basha Street, Al-Daqqaqen, Bab Al-Hadid (near Khan Asaad Basha), Damascus, Syria',
+        btn_copy_addr: 'Copy Address',
+        contact_title: 'Inquiries & Event Catering',
+        btn_send: 'Send via WhatsApp',
+        footer_sub: 'Old Damascus • Medhat Basha St • Al-Daqqaqen • Bab Al-Hadid',
+        footer_rights: '© 2026 Darmisk Restaurant. All rights reserved.',
+        cart_title: 'Your Darmisk Order',
+        cart_empty: 'Your order list is empty. Select dishes from the menu.',
+        ful_delivery: 'Damascus Delivery', ful_takeaway: 'Takeaway', ful_dinein: 'Dine-in',
+        cash_note: 'Payment in Cash Only upon delivery or at the restaurant',
+        subtotal: 'Estimated Subtotal', total: 'Total',
+        btn_checkout: 'Send Order via WhatsApp',
+        add_btn: 'Add',
+        open_now: 'Open Now (10:00 AM — 1:00 AM)',
+        closed_now: 'Closed Now (Opens 10:00 AM)',
+        toast_copied: 'Darmisk address copied to clipboard',
+        ph_name: 'Full Name', ph_phone: 'Mobile / WhatsApp Number', ph_msg: 'Your inquiry or catering details...'
+      }
+    };
+
+    const CATEGORIES = [
+      { id: 'breakfast', ar: 'الفطور الدمشقي والصباحيات', en: 'Damascene Breakfast' },
+      { id: 'mezze', ar: 'المقبلات والسلطات', en: 'Mezzeh & Salads' },
+      { id: 'kibbeh', ar: 'الكبب والأطباق بالفرن', en: 'Kibbeh & Oven Specialties' },
+      { id: 'grills', ar: 'المشاوي والأطباق الرئيسية', en: 'Grills & Main Courses' },
+      { id: 'sweets', ar: 'الحلويات والمشروبات والأركيلة', en: 'Desserts, Drinks & Shisha' }
+    ];
+
+    const MENU_ITEMS = [
+      // Breakfast
+      { id: 1, cat: 'breakfast', price: 8.5, veg: true, img: 'https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=700&q=80', ar: 'الفطور العربي الدمشقي الكلاسيكي', en: 'Classic Damascene Arabic Breakfast', descAr: 'تشكيلة لبنة، جبنة بلدية، زيتون، مكدوس، حمص، فول، بيض، ومربيات شامية', descEn: 'Assortment of labneh, local cheese, olives, makdous, hummus, fava beans, eggs & jams' },
+      { id: 2, cat: 'breakfast', price: 3.5, veg: true, img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=700&q=80', ar: 'مناقيش ساخنة طازجة على الأصول', en: 'Fresh Oven-Baked Manakish', descAr: 'مناقيش زعتر بلدي بزيت الزيتون، جبنة قشقوان، أو محمرة حلبية بالفرن', descEn: 'Freshly baked flatbreads with wild thyme & olive oil, kashkaval cheese, or muhammara' },
+      { id: 3, cat: 'breakfast', price: 6.0, veg: true, img: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=80', ar: 'تشكيلة المونة الدمشقية البيتية والفتات', en: 'Homemade Mouneh & Damascene Fatteh', descAr: 'فتة حمص بالسمن العربي والصنوبر مع تشكيلة مونة دمشقية بيتية أصيلة', descEn: 'Chickpea fatteh drizzled with local ghee & pine nuts alongside homemade Syrian mouneh' },
+
+      // Mezzeh & Salads
+      { id: 4, cat: 'mezze', price: 4.5, veg: true, img: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=700&q=80', ar: 'تبولة شامية طازجة', en: 'Fresh Damascene Tabbouleh', descAr: 'بقدونس بلدي مفروم ناعماً مع برغل، بندورة طازجة، عصير ليمون وزيت زيتون بكر', descEn: 'Finely chopped parsley, fine bulgur, ripe tomatoes, fresh lemon juice & virgin olive oil' },
+      { id: 5, cat: 'mezze', price: 5.0, veg: true, img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=700&q=80', ar: 'سلطة الشمندر بالجوز والطحينة', en: 'Beetroot Salad with Walnuts & Tahini', descAr: 'شمندر طازج مع بقدونس، بندورة كرزية، جوز محمص وصلصة طحينة دمشقية', descEn: 'Fresh beetroot tossed with parsley, cherry tomatoes, toasted walnuts & tahini drizzle' },
+      { id: 6, cat: 'mezze', price: 7.5, veg: true, img: 'https://images.unsplash.com/photo-1577906096429-f73c2c312435?auto=format&fit=crop&w=700&q=80', ar: 'تشكيلة مقبلات وسلطات شامية باردة وساخنة', en: 'Hot & Cold Damascene Mezzeh Selection', descAr: 'حمص دارمسك، متبل باذنجان مشوي، محمرة، فتوش، بطاطا حرة وبرك جبنة مقرمشة', descEn: 'Darmisk hummus, smoky mutabbal, muhammara, fattoush, spicy potatoes & cheese rolls' },
+
+      // Kibbeh & Oven Specialties
+      { id: 7, cat: 'kibbeh', price: 9.5, veg: false, img: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=700&q=80', ar: 'كبة صاجية', en: 'Sajiyeh Kibbeh', descAr: 'قرص كبة دمشقية محضر على الصاج بحشوة اللحم المتبل، الجوز، الرمان ودبس الرمان', descEn: 'Traditional griddled kibbeh stuffed with spiced minced lamb, walnuts & pomegranate molasses' },
+      { id: 8, cat: 'kibbeh', price: 8.5, veg: false, img: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=700&q=80', ar: 'كبة مقلية وكبة مشوية على الفحم', en: 'Fried & Charcoal-Grilled Kibbeh', descAr: 'أقراص كبة مقرمشة وكبة مشوية على جمر الفحم بحشوة الشحمة واللحم والفستق', descEn: 'Crispy fried kibbeh and charcoal-grilled kibbeh stuffed with spiced meat & pistachios' },
+      { id: 9, cat: 'kibbeh', price: 10.5, veg: false, img: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?auto=format&fit=crop&w=700&q=80', ar: 'كبة شاورما لحمة وكبة شاورما دجاج', en: 'Meat & Chicken Shawarma Kibbeh', descAr: 'ابتكار دارمسك الخاص: كبة محشوة بشرائح الشاورما المتبلة مع الصوصات الخاصة', descEn: 'Darmisk signature kibbeh stuffed with marinated beef or chicken shawarma slices' },
+      { id: 10, cat: 'kibbeh', price: 13.0, veg: false, img: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80', ar: 'طبلية العريس', en: 'Tabliyet Al-Arees', descAr: 'عجينة مقرمشة بالفرن محشوة باللحم الفاخر، الجبن، الفطر والبهارات الدمشقية', descEn: 'Oven-baked golden pastry stuffed with prime seasoned meat, melted cheese & mushrooms' },
+      { id: 11, cat: 'kibbeh', price: 9.0, veg: false, img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=700&q=80', ar: 'توشكا سجق', en: 'Sujuk Toshka', descAr: 'خبز محمص على الجمر محشو بالسجق الدمشقي المتبل وجبنة القشقوان الذائبة', descEn: 'Charcoal-toasted pita stuffed with spiced Damascene sujuk sausage & melted kashkaval' },
+      { id: 12, cat: 'kibbeh', price: 11.5, veg: false, img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=700&q=80', ar: 'فطيرة الكفتة بالفرن', en: 'Oven-Baked Kofta Pie', descAr: 'كفتة لحم غنم طازجة بالبندورة والبهارات الدمشقية مخبوزة في فرن دارمسك الحي', descEn: 'Fresh lamb kofta baked with ripe tomatoes and Damascene spices in our live oven' },
+
+      // Grills & Main Courses
+      { id: 13, cat: 'grills', price: 13.5, veg: false, img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=700&q=80', ar: 'كباب أضنة', en: 'Adana Kebab', descAr: 'أسياخ لحم غنم مفروم مع الفليفلة الحمراء الحارة والبهارات المشوية على الفحم', descEn: 'Hand-minced lamb kebab blended with red pepper flakes & grilled over live charcoal' },
+      { id: 14, cat: 'grills', price: 16.5, veg: false, img: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=700&q=80', ar: 'مشاوي مشكلة وكباب شرقي على الفحم', en: 'Mixed Grill & Oriental Charcoal Kebab', descAr: 'تشكيلة فاخرة من الكباب الشرقي، الشقف، والشيش طاووق مع البيواز والخبز المشوي', descEn: 'Generous platter of oriental kebab, lamb tikka & shish tawook with grilled bread' },
+      { id: 15, cat: 'grills', price: 9.5, veg: false, img: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?auto=format&fit=crop&w=700&q=80', ar: 'شاورما عربية', en: 'Arabic Shawarma Platter', descAr: 'شاورما دمشقية مقطعة ومحمصة مع كريم الثوم، المخلل الشامي والبطاطا المقلية', descEn: 'Sliced toasted Damascene shawarma served with garlic cream, pickles & crispy fries' },
+      { id: 16, cat: 'grills', price: 14.0, veg: false, img: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80', ar: 'أطباق شرقية ودمشقية أصيلة وأطباق غربية مختارة', en: 'Authentic Damascene & Selected Western Mains', descAr: 'يبرق دمشقي، شيش برك، كبة لبنية، موزات بالجبنة الشامية، إضافة إلى أطباق غربية مختارة', descEn: 'Stuffed vine leaves, shish barak, kibbeh bil laban, braised shanks & Western classics' },
+
+      // Desserts, Drinks & Shisha
+      { id: 17, cat: 'sweets', price: 6.5, veg: true, img: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=700&q=80', ar: 'حلويات شرقية وشامية فاخرة', en: 'Fine Oriental & Damascene Sweets', descAr: 'تشكيلة حلويات شامية بالفستق الحلبي والقشطة العربية والسمن البلدي', descEn: 'Assorted Damascene pastries crafted with Aleppian pistachios, ashta cream & ghee' },
+      { id: 18, cat: 'sweets', price: 3.0, veg: true, img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=700&q=80', ar: 'قهوة عربية ومختصة وتشكيلة شاي مميزة', en: 'Arabic & Specialty Coffee & Fine Teas', descAr: 'قهوة عربية بالهيل، قهوة تركية، إسبريسو، وشاي عجمي وأخضر وزهورات شامية', descEn: 'Cardamom Arabic coffee, Turkish coffee, espresso, and Damascene herbal & black teas' },
+      { id: 19, cat: 'sweets', price: 3.5, veg: true, img: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=700&q=80', ar: 'مشروبات باردة وعصائر طازجة', en: 'Cold Drinks & Fresh Juices', descAr: 'عصائر فواكه طبيعية طازجة، رمان، ليمون بالنعناع، بولو، وميلك شيك متنوع', descEn: 'Freshly squeezed seasonal juices, pomegranate, mint lemonade, polo & milkshakes' },
+      { id: 20, cat: 'sweets', price: 5.0, veg: true, img: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=700&q=80', ar: 'أركيلة بنكهات متنوعة', en: 'Premium Flavored Shisha', descAr: 'أركيلة معسل تفاحتين ونكهات فواكه متنوعة تُقدم في أجواء أرض الديار والسهرات', descEn: 'Traditional double-apple and assorted fruit shisha served in our heritage courtyard' }
+    ];
+
+    const GALLERY = [
+      { img: 'hero-darmisk.jpg', ar: 'سحر البيت الدمشقي التراثي في دارمسك', en: 'Heritage Damascene house architecture at Darmisk' },
+      { img: 'https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=1000&q=80', ar: 'الفطور الدمشقي الصباحي والمقبلات', en: 'Morning Damascene breakfast & mezze spread' },
+      { img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1000&q=80', ar: 'المشاوي والكباب على جمر الفحم', en: 'Charcoal-grilled kebabs & mixed grills' },
+      { img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=80', ar: 'سلطة الشمندر بالجوز والطحينة', en: 'Beetroot salad with walnuts & tahini' },
+      { img: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=1000&q=80', ar: 'الحلويات الشامية الفاخرة بالفستق', en: 'Fine Damascene pistachio sweets' },
+      { img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80', ar: 'القهوة العربية وأجواء السهرات الدمشقية', en: 'Arabic coffee & Damascene evening ambiance' }
+    ];
+
+    const TIME_SLOTS = ['10:30', '13:30', '16:00', '19:30', '21:30', '23:00'];
+
+    let lang = localStorage.getItem('darmisk_lang') || 'ar';
+    let activeCat = 'breakfast';
+    let vegOnly = false;
+    let cart = {};
+    let fulfillment = 'delivery';
+    let selectedTime = { inline: '19:30', modal: '19:30' };
+    let lightboxIdx = 0;
+
+    const t = (key) => I18N[lang][key] || key;
+
+    function lockBodyScroll(lock) {
+      document.body.style.overflow = lock ? 'hidden' : '';
+    }
+
+    function applyLanguage() {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.getElementById('lang-toggle').textContent = lang === 'ar' ? 'EN' : 'العربية';
+      document.getElementById('mobile-lang-btn').textContent = lang === 'ar' ? 'EN' : 'العربية';
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.textContent = t(el.dataset.i18n);
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        el.placeholder = t(el.dataset.i18nPlaceholder);
+      });
+
+      renderCategories();
+      renderMenu();
+      renderGallery();
+      renderCart();
+      updateLiveStatus();
+    }
+
+    function toggleLanguage() {
+      lang = lang === 'ar' ? 'en' : 'ar';
+      localStorage.setItem('darmisk_lang', lang);
+      applyLanguage();
+    }
+
+    function toggleMobileMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+
+    function renderCategories() {
+      const container = document.getElementById('category-tabs');
+      container.innerHTML = CATEGORIES.map(c => `
+        <button onclick="setCategory('${c.id}')" class="whitespace-nowrap px-4 sm:px-5 py-2 text-xs sm:text-sm font-semibold rounded-full border transition-colors ${activeCat === c.id ? 'bg-espresso text-alabaster border-espresso' : 'hairline text-espresso/80 hover:border-espresso'}">
+          ${c[lang]}
+        </button>
+      `).join('');
+    }
+
+    function setCategory(id) {
+      activeCat = id;
+      renderCategories();
+      renderMenu();
+    }
+
+    function toggleVegFilter() {
+      vegOnly = !vegOnly;
+      const btn = document.getElementById('filter-veg');
+      btn.classList.toggle('bg-terracotta', vegOnly);
+      btn.classList.toggle('text-alabaster', vegOnly);
+      btn.classList.toggle('border-terracotta', vegOnly);
+      renderMenu();
+    }
+
+    function renderMenu() {
+      const grid = document.getElementById('menu-grid');
+      const items = MENU_ITEMS.filter(item => {
+        if (item.cat !== activeCat) return false;
+        if (vegOnly && !item.veg) return false;
+        return true;
+      });
+
+      grid.innerHTML = items.map(item => {
+        const qty = cart[item.id] || 0;
+        return `
+          <div class="bg-alabaster border hairline rounded-2xl overflow-hidden flex md:flex-col hover:border-terracotta/50 transition-colors">
+            <img src="${item.img}" alt="${item[lang]}" class="w-24 h-24 m-2.5 md:m-0 md:w-full md:h-48 rounded-xl md:rounded-none object-cover shrink-0 self-center" loading="lazy" />
+            <div class="py-3 pe-3 ps-1 md:p-5 flex-1 flex flex-col justify-between gap-2 min-w-0">
+              <div>
+                <div class="flex items-start justify-between gap-2">
+                  <h3 class="font-bold text-sm sm:text-base text-espresso leading-snug">${item[lang]}</h3>
+                  <span class="font-bold text-sm sm:text-base text-terracotta shrink-0">$${item.price.toFixed(2)}</span>
+                </div>
+                <p class="text-xs text-muted mt-1 line-clamp-2 leading-relaxed">${lang === 'ar' ? item.descAr : item.descEn}</p>
+              </div>
+              <div class="flex items-center justify-between pt-1.5">
+                <div class="flex gap-1">
+                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-stonewarm text-espresso/80 font-semibold">Halal</span>
+                  ${item.veg ? `<span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-800/10 text-emerald-900 font-semibold">V</span>` : ''}
+                </div>
+                ${qty === 0 ? `
+                  <button onclick="updateCart(${item.id}, 1)" class="px-3.5 py-1.5 text-xs font-semibold bg-espresso hover:bg-terracotta text-alabaster rounded-full transition-colors">${t('add_btn')}</button>
+                ` : `
+                  <div class="inline-flex items-center gap-2 border hairline rounded-full px-2 py-1">
+                    <button onclick="updateCart(${item.id}, -1)" class="w-5 h-5 rounded-full hover:bg-stonewarm text-xs font-bold">−</button>
+                    <span class="text-xs font-bold min-w-[14px] text-center">${qty}</span>
+                    <button onclick="updateCart(${item.id}, 1)" class="w-5 h-5 rounded-full hover:bg-stonewarm text-xs font-bold">+</button>
+                  </div>
+                `}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateCart(id, delta) {
+      cart[id] = (cart[id] || 0) + delta;
+      if (cart[id] <= 0) delete cart[id];
+      renderMenu();
+      renderCart();
+    }
+
+    function setFulfillment(mode) {
+      fulfillment = mode;
+      renderCart();
+    }
+
+    function renderCart() {
+      const entries = Object.entries(cart);
+      const count = entries.reduce((sum, [, q]) => sum + q, 0);
+      document.getElementById('header-cart-count').textContent = count;
+      document.getElementById('mobile-cart-count').textContent = count;
+
+      ['delivery', 'takeaway', 'dinein'].forEach(mode => {
+        const btn = document.getElementById('btn-' + mode);
+        btn.classList.toggle('bg-espresso', fulfillment === mode);
+        btn.classList.toggle('text-alabaster', fulfillment === mode);
+      });
+
+      const body = document.getElementById('cart-body');
+      if (entries.length === 0) {
+        body.innerHTML = `<p class="text-sm text-muted text-center py-12">${t('cart_empty')}</p>`;
+        document.getElementById('cart-totals').innerHTML = '';
+        document.getElementById('checkout-btn').disabled = true;
+        document.getElementById('checkout-btn').classList.add('opacity-50');
+        return;
+      }
+
+      document.getElementById('checkout-btn').disabled = false;
+      document.getElementById('checkout-btn').classList.remove('opacity-50');
+
+      let subtotal = 0;
+      body.innerHTML = entries.map(([id, qty]) => {
+        const item = MENU_ITEMS.find(m => m.id === Number(id));
+        subtotal += item.price * qty;
+        return `
+          <div class="flex items-center justify-between gap-3 pb-3 border-b hairline">
+            <div>
+              <p class="text-sm font-bold">${item[lang]}</p>
+              <p class="text-xs text-muted">$${item.price.toFixed(2)} × ${qty}</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="updateCart(${item.id}, -1)" class="w-6 h-6 rounded-full border hairline text-xs font-bold">−</button>
+              <span class="text-xs font-bold">${qty}</span>
+              <button onclick="updateCart(${item.id}, 1)" class="w-6 h-6 rounded-full border hairline text-xs font-bold">+</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('cart-totals').innerHTML = `
+        <div class="flex justify-between font-bold text-espresso pt-2 border-t hairline">
+          <span>${t('total')}</span>
+          <span>$${subtotal.toFixed(2)}</span>
+        </div>
+      `;
+    }
+
+    function openCartDrawer() {
+      document.getElementById('cart-drawer').classList.remove('hidden');
+      lockBodyScroll(true);
+    }
+    function closeCartDrawer() {
+      document.getElementById('cart-drawer').classList.add('hidden');
+      lockBodyScroll(false);
+    }
+
+    function checkoutOrder() {
+      const entries = Object.entries(cart);
+      if (!entries.length) return;
+      let total = 0;
+      const lines = entries.map(([id, qty]) => {
+        const item = MENU_ITEMS.find(m => m.id === Number(id));
+        total += item.price * qty;
+        return `• ${item.ar} (${qty}x) - $${(item.price * qty).toFixed(2)}`;
+      });
+      const modeLabel = fulfillment === 'delivery' ? 'توصيل داخل دمشق' : fulfillment === 'takeaway' ? 'سفري (Takeaway)' : 'داخل الصالة (Dine-in)';
+      const msg = `مرحباً مطعم دارمسك، أرغب بطلب التالي:\n${lines.join('\n')}\n\nنوع الطلب: ${modeLabel}\nالمجموع التقديري: $${total.toFixed(2)} (الدفع نقدي)`;
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function renderTimeSlots(scope) {
+      const container = document.getElementById(scope + '-time-slots');
+      container.innerHTML = TIME_SLOTS.map(slot => `
+        <button type="button" onclick="selectTime('${scope}', '${slot}')" class="py-2 text-xs font-semibold rounded-xl border transition-colors ${selectedTime[scope] === slot ? 'bg-terracotta text-alabaster border-terracotta' : 'bg-alabaster hairline'}">
+          ${slot}
+        </button>
+      `).join('');
+    }
+
+    function selectTime(scope, slot) {
+      selectedTime[scope] = slot;
+      renderTimeSlots(scope);
+    }
+
+    function handleReservationSubmit(e, scope) {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const name = fd.get('name');
+      const phone = fd.get('phone');
+      const date = fd.get('date');
+      const guests = fd.get('guests');
+      const seating = fd.get('seating') || 'courtyard';
+      const code = 'DMK-' + Math.floor(1000 + Math.random() * 9000);
+
+      document.getElementById(scope + '-res-form').classList.add('hidden');
+      document.getElementById(scope + '-res-receipt').classList.remove('hidden');
+      document.getElementById(scope + '-res-details').textContent = `${name} • ${date} • ${selectedTime[scope]} • ${guests}`;
+      document.getElementById(scope + '-res-code').textContent = code;
+
+      const msg = `مرحباً مطعم دارمسك، أود تأكيد حجز طاولة:\nالاسم: ${name}\nالهاتف: ${phone}\nالتاريخ: ${date}\nالوقت: ${selectedTime[scope]}\nعدد الأشخاص: ${guests}\nرقم المرجع: ${code}`;
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function resetReservation(scope) {
+      document.getElementById(scope + '-res-form').reset();
+      document.getElementById(scope + '-res-form').classList.remove('hidden');
+      document.getElementById(scope + '-res-receipt').classList.add('hidden');
+    }
+
+    function openReservationModal() {
+      resetReservation('modal');
+      document.getElementById('res-modal').classList.remove('hidden');
+      lockBodyScroll(true);
+    }
+    function closeReservationModal() {
+      document.getElementById('res-modal').classList.add('hidden');
+      lockBodyScroll(false);
+    }
+
+    function renderGallery() {
+      document.getElementById('gallery-grid').innerHTML = GALLERY.map((g, i) => `
+        <button onclick="openLightbox(${i})" class="group relative overflow-hidden rounded-2xl border hairline aspect-square">
+          <img src="${g.img}" alt="${g[lang]}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+        </button>
+      `).join('');
+    }
+
+    function openLightbox(i) {
+      lightboxIdx = i;
+      updateLightbox();
+      document.getElementById('lightbox').classList.remove('hidden');
+      lockBodyScroll(true);
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.add('hidden');
+      lockBodyScroll(false);
+    }
+    function stepLightbox(dir) {
+      lightboxIdx = (lightboxIdx + dir + GALLERY.length) % GALLERY.length;
+      updateLightbox();
+    }
+    function updateLightbox() {
+      document.getElementById('lightbox-img').src = GALLERY[lightboxIdx].img;
+      document.getElementById('lightbox-caption').textContent = GALLERY[lightboxIdx][lang];
+    }
+
+    function updateLiveStatus() {
+      const hour = new Date().getHours();
+      // Open daily 10:00 AM (10) to 1:00 AM (hour === 0 or hour >= 10)
+      const isOpen = hour >= 10 || hour < 1;
+      const el = document.getElementById('live-status');
+      el.textContent = isOpen ? t('open_now') : t('closed_now');
+      el.className = 'text-xs font-semibold px-3 py-1 rounded-full ' + (isOpen ? 'bg-emerald-700/15 text-emerald-800' : 'bg-red-700/15 text-red-800');
+    }
+
+    function copyAddress() {
+      navigator.clipboard?.writeText(t('address_text'));
+      showToast(t('toast_copied'));
+    }
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const inputs = e.target.querySelectorAll('input, textarea');
+      const msg = `مرحباً مطعم دارمسك، لدي استفسار:\nالاسم: ${inputs[0].value}\nالهاتف: ${inputs[1].value}\nالتفاصيل: ${inputs[2].value}`;
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+      e.target.reset();
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 3200);
+    }
+
+    // Touch swipe for gallery lightbox
+    let touchStartX = 0;
+    const lbEl = document.getElementById('lightbox');
+    lbEl.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+    lbEl.addEventListener('touchend', e => {
+      const diff = e.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(diff) > 40) stepLightbox(diff > 0 ? -1 : 1);
+    }, { passive: true });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const today = new Date().toISOString().split('T')[0];
+      document.querySelectorAll('input[type="date"]').forEach(el => { el.min = today; el.value = today; });
+      renderTimeSlots('inline');
+      renderTimeSlots('modal');
+      applyLanguage();
+
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const targetId = this.getAttribute('href');
+          if (targetId && targetId.length > 1) {
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+              e.preventDefault();
+              lockBodyScroll(false);
+              const headerOffset = 72;
+              const elementPosition = targetEl.getBoundingClientRect().top + window.scrollY;
+              window.scrollTo({
+                top: Math.max(0, elementPosition - headerOffset),
+                behavior: 'smooth'
+              });
+            }
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
